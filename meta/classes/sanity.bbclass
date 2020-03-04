@@ -495,7 +495,7 @@ def check_make_version(sanity_data):
     if status != 0:
         return "Unable to execute make --version, exit code %s\n" % status
     version = result.split()[2]
-	try:
+    try:
     if LooseVersion(version) == LooseVersion("3.82"):
         # Construct a test file
         f = open("makefile_test", "w")
@@ -521,8 +521,8 @@ def check_make_version(sanity_data):
 
         if status != 0:
             return "Your version of make 3.82 is broken. Please revert to 3.81 or install a patched version.\n"
-	except:
-		print("Dagan Warn: Pass Make version check")
+    except:
+        print("Dagan Warn: Pass Make version check")
     return None
 
 
