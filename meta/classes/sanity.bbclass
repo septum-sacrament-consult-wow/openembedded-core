@@ -496,28 +496,28 @@ def check_make_version(sanity_data):
         return "Unable to execute make --version, exit code %s\n" % status
     version = result.split()[2]
     try:
-    if LooseVersion(version) == LooseVersion("3.82"):
-        # Construct a test file
-        f = open("makefile_test", "w")
-        f.write("makefile_test.a: makefile_test_a.c makefile_test_b.c makefile_test.a( makefile_test_a.c makefile_test_b.c)\n")
-        f.write("\n")
-        f.write("makefile_test_a.c:\n")
-        f.write("	touch $@\n")
-        f.write("\n")
-        f.write("makefile_test_b.c:\n")
-        f.write("	touch $@\n")
-        f.close()
+        if LooseVersion(version) == LooseVersion("3.82"):
+            # Construct a test file
+            f = open("makefile_test", "w")
+            f.write("makefile_test.a: makefile_test_a.c makefile_test_b.c makefile_test.a( makefile_test_a.c makefile_test_b.c)\n")
+            f.write("\n")
+            f.write("makefile_test_a.c:\n")
+            f.write("	touch $@\n")
+            f.write("\n")
+            f.write("makefile_test_b.c:\n")
+            f.write("	touch $@\n")
+            f.close()
 
-        # Check if make 3.82 has been patched
-        status,result = oe.utils.getstatusoutput("make -f makefile_test")
+            # Check if make 3.82 has been patched
+            status,result = oe.utils.getstatusoutput("make -f makefile_test")
 
-        os.remove("makefile_test")
-        if os.path.exists("makefile_test_a.c"):
-            os.remove("makefile_test_a.c")
-        if os.path.exists("makefile_test_b.c"):
-            os.remove("makefile_test_b.c")
-        if os.path.exists("makefile_test.a"):
-            os.remove("makefile_test.a")
+            os.remove("makefile_test")
+            if os.path.exists("makefile_test_a.c"):
+                os.remove("makefile_test_a.c")
+            if os.path.exists("makefile_test_b.c"):
+                os.remove("makefile_test_b.c")
+            if os.path.exists("makefile_test.a"):
+                os.remove("makefile_test.a")
 
         if status != 0:
             return "Your version of make 3.82 is broken. Please revert to 3.81 or install a patched version.\n"
